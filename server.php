@@ -12,7 +12,7 @@ define('_DOOR_EXPIRED_KEY', 2);
 define('_DOOR_EXPIRING_KEY', 3);
 define('_DOOR_VALID_KEY', 4);
 
-define('_DOOR_PATH','/opt/php-door/');
+require 'inc.php';
 
 require(_DOOR_PATH."phpMQTT.php");
 
@@ -26,11 +26,6 @@ if(!$mqtt->connect()){
 function process_message($topic, $message){
 	echo "Got topic: $topic \n";
 	switch($topic){
-		case 'techspace/checkin/rfid':
-			// push this checkin straight up to the wordpress api.
-			// exepct the message to be the RFID key used for checkin.
-			$result = wordpress_api($message.'/checkin');
-			break;
 		case 'techspace/devices':
 			$bits = explode(";",$message); // e.g. room-3;121323123123
 			if(count($bits)==2){
@@ -89,46 +84,7 @@ function mqtt_device_reply( $device_name, $message ){
 	$mqtt->publish("techspace/devices/".$device_name,$message,0);
 }
 
-function get_member_by_rfid($rfid){
-	if(!$rfid)return false;
-	$members = json_decode(file_get_contents(_DOOR_PATH.'members.json'), true);
-	foreach($members as $member){
-		if(!empty($member['rfid']) && is_array($member['rfid'])){
-			foreach($member['rfid'] as $member_rfid){
-				if($member_rfid == $rfid){
-					return $member;
-				}
-			}
-		}
-	}
-	return false;
-}
 
-function wordpress_api($endpoint){
-	// we grab the latest list of members from the techspace wordpress api.
-	// cache these into the members.json file
-	$ch = curl_init("https://gctechspace.org/api/rfid/".$endpoint);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_HEADER, false);
-	curl_setopt($ch, CURLOPT_POST, 1);
-	$settings = json_decode(file_get_contents(_DOOR_PATH.'settings.json'),true);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-		'secret' => $settings['api_secret'],
-	));
-	return curl_exec($ch);
-}
-
-function update_member_db(){
-	$data = wordpress_api('all');
-	if($data){
-		// test to ensure it's valid json
-		$foo = json_decode($data,true);
-		if(is_array($foo) && count($foo) > 1){
-			// all good. write this json data to cache.
-			file_put_contents(_DOOR_PATH.'members.json', $data);
-		}
-	}
-}
 $topics['techspace/checkin/rfid'] = array("qos"=>0, "function"=>"process_message");
 $topics['techspace/devices'] = array("qos"=>0, "function"=>"process_message");
 $mqtt->subscribe($topics,0);

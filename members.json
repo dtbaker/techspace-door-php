@@ -1,14 +1,1 @@
-[
-  {
-    "member_name":"Skip Christian",
-    "membership_expiry_days":23,
-    "rfid":["565434567"],
-    "access":{"back-door":"Back Door","room-3":"Room 3"}
-  },
-  {
-    "member_name":"David Baker",
-    "membership_expiry_days":67,
-    "rfid":["9876543","12345678"],
-    "access":{"back-door":"Back Door"}
-  }
-]
+[]
