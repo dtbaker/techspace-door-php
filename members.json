@@ -1,1 +1,344 @@
-[]
+[
+  {
+    "member_name": "jason",
+    "member_email": "",
+    "membership_expiry_days": 0,
+    "xero_contact_id": "",
+    "rfid": [
+      "827075254"
+    ],
+    "access": []
+  },
+  {
+    "member_name": "Warwick",
+    "member_email": "w.hunter@computer.org",
+    "membership_expiry_days": 0,
+    "xero_contact_id": "201a0042-c93c-4f0a-b575-c9fb2cc6b944",
+    "rfid": [
+      "826888998"
+    ],
+    "access": []
+  },
+  {
+    "member_name": "Shervin Emami",
+    "member_email": "shervin.emami@gmail.com",
+    "membership_expiry_days": 125,
+    "xero_contact_id": "cfe3b7cf-0a0d-424d-949d-7f45a56c3de5",
+    "rfid": [],
+    "access": []
+  },
+  {
+    "member_name": "Oliver Shields",
+    "member_email": "oliverjshields@outlook.com",
+    "membership_expiry_days": 352,
+    "xero_contact_id": "",
+    "rfid": [
+      "1387860117"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Robert Moller",
+    "member_email": "",
+    "membership_expiry_days": 0,
+    "xero_contact_id": "5ecf869e-a87e-41b9-806b-1f553e9f4a7e",
+    "rfid": [],
+    "access": []
+  },
+  {
+    "member_name": "Miles Goodings",
+    "member_email": "miles.goodings@gmail.com",
+    "membership_expiry_days": 94,
+    "xero_contact_id": "11414976-4b79-47ec-aa1f-af6b62fe770e",
+    "rfid": [
+      "3737868867"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Paul Breuker",
+    "member_email": "paul.breuker@gmail.com",
+    "membership_expiry_days": 154,
+    "xero_contact_id": "57824ddd-bb56-408d-bda2-17d0ce56ff53",
+    "rfid": [
+      "1388098709",
+      "2162029475"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Josh Adler",
+    "member_email": "lexusjosh@gmail.com",
+    "membership_expiry_days": 94,
+    "xero_contact_id": "2a10592d-8cb6-4632-9c8c-b4a2b9007d49",
+    "rfid": [
+      "4231236429"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Jurgen Schull",
+    "member_email": "j.schull@plantcorn.com",
+    "membership_expiry_days": 94,
+    "xero_contact_id": "20172e8a-b7e8-4d30-9a91-f5d3d8f30478",
+    "rfid": [
+      "1702200115"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Rhys Williams",
+    "member_email": "bananasdoom@gmail.com",
+    "membership_expiry_days": 337,
+    "xero_contact_id": "1cb54f1d-2bc5-489b-937d-b0dcc3b98a2f",
+    "rfid": [
+      "826947014",
+      "985419564"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Peter Caelli",
+    "member_email": "",
+    "membership_expiry_days": 94,
+    "xero_contact_id": "88d78269-4a57-48d3-9195-ec0856d720ae",
+    "rfid": [
+      "1697205506"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Ian Sampson",
+    "member_email": "ian@itsampson.com",
+    "membership_expiry_days": 0,
+    "xero_contact_id": "32ea69ed-c156-488b-8c76-387a6363898f",
+    "rfid": [
+      "4157649315"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Mark Voevodin",
+    "member_email": "markv@trixsolutions.com",
+    "membership_expiry_days": 94,
+    "xero_contact_id": "97db1869-3149-4382-9214-500a1a3a54fa",
+    "rfid": [
+      "1153499433",
+      "958457797"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Steve Dalton",
+    "member_email": "steve@refactor.com.au",
+    "membership_expiry_days": 129,
+    "xero_contact_id": "e32edce5-feb0-4b8d-a353-c97abea14f22",
+    "rfid": [
+      "190867698",
+      "33900693"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Mike Morrison",
+    "member_email": "mike.morrison.mad@gmail.com",
+    "membership_expiry_days": 143,
+    "xero_contact_id": "768e059c-1c9b-41ee-9f8c-1957ff953902",
+    "rfid": [
+      "826592214"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Matt Paine",
+    "member_email": "mattzerah@gmail.com",
+    "membership_expiry_days": 94,
+    "xero_contact_id": "86bc951b-6b44-462f-aacd-e73a081a21ce",
+    "rfid": [
+      "1702059466"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Ken Frick",
+    "member_email": "konthegoldcoast@gmail.com",
+    "membership_expiry_days": 135,
+    "xero_contact_id": "5f9bdf36-eb28-4d8e-96a3-752c54dfbdc6",
+    "rfid": [
+      "36613098"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "James Shepherd",
+    "member_email": "james.shepherd@griffithuni.edu.au",
+    "membership_expiry_days": 94,
+    "xero_contact_id": "fdc02120-1cc7-4815-aae1-2c1c1dfe7914",
+    "rfid": [],
+    "access": {
+      "ci": "Check-In"
+    }
+  },
+  {
+    "member_name": "Sarah Kirkland RedCat",
+    "member_email": "redcatscience@gmail.com",
+    "membership_expiry_days": 94,
+    "xero_contact_id": "143b4f51-5a6c-4e52-b8ff-959c7cf41aef",
+    "rfid": [
+      "3745690371"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "James Sapsford",
+    "member_email": "james.sapsford9@gmail.com",
+    "membership_expiry_days": 94,
+    "xero_contact_id": "22048e48-4ea1-45b3-ae3e-2417417ce166",
+    "rfid": [
+      "826925318"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "James &#8220;Jmo&#8221; Moolenschot",
+    "member_email": "james@wildcard.net.au",
+    "membership_expiry_days": 4,
+    "xero_contact_id": "fd066c1c-2a24-4252-8345-e826bcb50340",
+    "rfid": [
+      "1388039749"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Jackson Meyn",
+    "member_email": "jacksonmeyn@gmail.com",
+    "membership_expiry_days": 303,
+    "xero_contact_id": "705ba58b-f707-4b9b-a6bc-9cbd30b6f930",
+    "rfid": [],
+    "access": {
+      "ci": "Check-In"
+    }
+  },
+  {
+    "member_name": "Chad Merriman",
+    "member_email": "chadmerriman@outlook.com",
+    "membership_expiry_days": 0,
+    "xero_contact_id": "ab2753df-a68a-4264-92e2-a7fd623408cc",
+    "rfid": [],
+    "access": {
+      "ci": "Check-In"
+    }
+  },
+  {
+    "member_name": "Tiah Goldstein",
+    "member_email": "tiah@yaazam.com.au",
+    "membership_expiry_days": 0,
+    "xero_contact_id": "5b2e07f4-fff2-4596-81ff-0059b5346699",
+    "rfid": [
+      "826829542"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "Stacey Thompson (Reef)",
+    "member_email": "currumbinbeach@hotmail.com",
+    "membership_expiry_days": 0,
+    "xero_contact_id": "530ba4bc-87d5-4eee-9dc2-61100b132439",
+    "rfid": [],
+    "access": {
+      "ci": "Check-In"
+    }
+  },
+  {
+    "member_name": "Skip Christian",
+    "member_email": "skip.xtian@gmail.com",
+    "membership_expiry_days": 94,
+    "xero_contact_id": "95090df8-9be0-4577-8ec4-7d3d21fd2b44",
+    "rfid": [
+      "4157262387"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  },
+  {
+    "member_name": "David Baker",
+    "member_email": "dtbaker@gmail.com",
+    "membership_expiry_days": 94,
+    "xero_contact_id": "d3c2972a-bf77-4b3d-b7c0-2a052e448df2",
+    "rfid": [
+      "3765728402"
+    ],
+    "access": {
+      "ci": "Check-In",
+      "room-3": "Room 3",
+      "door": "The Door"
+    }
+  }
+]

@@ -33,6 +33,17 @@ function update_member_db(){
 	}
 }
 
+function get_member_by_email($email){
+	if(!$email)return false;
+	$email = strtolower($email);
+	$members = json_decode(file_get_contents(_DOOR_PATH.'members.json'), true);
+	foreach($members as $member){
+		if(!empty($member['member_email']) && $email == strtolower($member['member_email'])){
+			return $member;
+		}
+	}
+	return false;
+}
 function get_member_by_rfid($rfid){
 	if(!$rfid)return false;
 	$members = json_decode(file_get_contents(_DOOR_PATH.'members.json'), true);
