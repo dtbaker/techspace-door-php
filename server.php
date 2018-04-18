@@ -72,16 +72,22 @@ function process_message($topic, $message){
 				echo "Inavlid message\n";
 			}
 			break;
+		case 'alive':
+			if(preg_match('#(.*)-(\d+\.\d+\.\d\.\d)#imsU', $message, $alive)){
+
+				$door_name = $alive[0];
+				$door_ip_address = $alive[1];
+				mqtt_device_reply( $door_name, "Received $door_name at $door_ip_address" );
+				$reply = wordpress_api_door_status($door_name, $door_ip_address);
+
+			}
+			break;
 		case 'techspace/doors':
 			$bits = explode(";",$message); // e.g. book;open
 			if(count($bits)==2){
 				$door_name = $bits[0];
 				$door_status = $bits[1];
-				// unknown key, not linked to a current member.
 				mqtt_device_reply( $door_name, "Received $door_status" );
-
-				// now we have to push this up to the server so we get a log of it.
-				// gctechspace.org/api/rfid/RFID_KEY/DEVICE_NAME
 				$reply = wordpress_api_door_status($door_name, $door_status);
 
 			}else{
@@ -111,6 +117,7 @@ function mqtt_door_reply( $door_name, $message ){
 $topics['techspace/checkin/rfid'] = array("qos"=>0, "function"=>"process_message");
 $topics['techspace/devices'] = array("qos"=>0, "function"=>"process_message");
 $topics['techspace/doors'] = array("qos"=>0, "function"=>"process_message");
+$topics['alive'] = array("qos"=>0, "function"=>"process_message");
 $mqtt->subscribe($topics,0);
 
 echo "Starting...\n";
