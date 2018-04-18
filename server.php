@@ -73,10 +73,10 @@ function process_message($topic, $message){
 			}
 			break;
 		case 'alive':
-			if(preg_match('#(.*)-(\d+\.\d+\.\d\.\d)#imsU', $message, $alive)){
+			if(preg_match('#(.*)-(\d+\.\d+\.\d+\.\d+)#imsU', $message, $alive)){
 
-				$door_name = $alive[0];
-				$door_ip_address = $alive[1];
+				$door_name = $alive[1];
+				$door_ip_address = $alive[2];
 				mqtt_device_reply( $door_name, "Received $door_name at $door_ip_address" );
 				$reply = wordpress_api_door_status($door_name, $door_ip_address);
 
