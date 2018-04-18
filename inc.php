@@ -1,7 +1,7 @@
 <?php
 
 
-define('_DOOR_PATH','/opt/php-door/');
+define('_DOOR_PATH','/srv/www/door-server/');
 
 function wordpress_api($endpoint, $log_data = array()){
 	// we grab the latest list of members from the techspace wordpress api.
@@ -16,6 +16,24 @@ function wordpress_api($endpoint, $log_data = array()){
 		'secret' => $settings['api_secret'],
 	);
 	$post_data = array_merge($post_data, $log_data);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+	$data = curl_exec($ch);
+	return $data;
+}
+
+function wordpress_api_door_status($door_name, $door_status){
+	// we grab the latest list of members from the techspace wordpress api.
+	// cache these into the members.json file
+	$ch = curl_init("https://gctechspace.org/api/doors/".$door_name);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	$settings = json_decode(file_get_contents(_DOOR_PATH.'settings.json'),true);
+	$post_data = array(
+		'secret' => $settings['api_secret'],
+		'doorstatus' => $door_status,
+	);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
 	$data = curl_exec($ch);
 	return $data;

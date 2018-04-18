@@ -23,6 +23,8 @@ if(!$mqtt->connect()){
 	exit(1);
 }
 
+//$reply = wordpress_api('1111111/ci');
+
 function process_message($topic, $message){
 	echo "Got topic: $topic \n";
 	switch($topic){
@@ -70,6 +72,22 @@ function process_message($topic, $message){
 				echo "Inavlid message\n";
 			}
 			break;
+		case 'techspace/doors':
+			$bits = explode(";",$message); // e.g. book;open
+			if(count($bits)==2){
+				$door_name = $bits[0];
+				$door_status = $bits[1];
+				// unknown key, not linked to a current member.
+				mqtt_device_reply( $door_name, "Received $door_status" );
+
+				// now we have to push this up to the server so we get a log of it.
+				// gctechspace.org/api/rfid/RFID_KEY/DEVICE_NAME
+				$reply = wordpress_api_door_status($door_name, $door_status);
+
+			}else{
+				echo "Inavlid message\n";
+			}
+			break;
 		case 'techspace/devices/status':
 
 			break;
@@ -83,10 +101,16 @@ function mqtt_device_reply( $device_name, $message ){
 	echo "Sending "."techspace/devices/".$device_name." message of: $message \n";
 	$mqtt->publish("techspace/devices/".$device_name,$message,0);
 }
+function mqtt_door_reply( $door_name, $message ){
+	global $mqtt;
+	echo "Sending "."techspace/doors/".$door_name." message of: $message \n";
+	$mqtt->publish("techspace/doors/".$door_name,$message,0);
+}
 
 
 $topics['techspace/checkin/rfid'] = array("qos"=>0, "function"=>"process_message");
 $topics['techspace/devices'] = array("qos"=>0, "function"=>"process_message");
+$topics['techspace/doors'] = array("qos"=>0, "function"=>"process_message");
 $mqtt->subscribe($topics,0);
 
 echo "Starting...\n";
