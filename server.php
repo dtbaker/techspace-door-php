@@ -12,6 +12,8 @@ define('_DOOR_EXPIRED_KEY', 2);
 define('_DOOR_EXPIRING_KEY', 3);
 define('_DOOR_VALID_KEY', 4);
 
+define('_VENDING_INVALID_KEY', 1);
+
 require 'inc.php';
 
 require(_DOOR_PATH."phpMQTT.php");
@@ -94,6 +96,29 @@ function process_message($topic, $message){
 				echo "Inavlid message\n";
 			}
 			break;
+		case 'vending/rfid':
+			$bits = explode(";",$message); // e.g. vending-1;121323123123
+			if(count($bits)==2) {
+				$member = get_member_by_rfid( $bits[1] );
+				if ( $member ) {
+					// valid membership found linked to RFID key.
+					// check if they have any orders in wordpress.
+					require_once 'vending.php';
+					$VendingWoo = VendingWoo::get_instance();
+					$VendingWoo->init();
+					$member_orders = $VendingWoo->get_member_orders($member);
+
+					if($member_orders){
+						mqtt_reply( 'vending/dispatch/'.$bits[0], implode(',',$member_orders) );
+					}else{
+						mqtt_reply( 'vending/nothing/'.$bits[0], 'nothing' );
+					}
+
+				}else{
+					mqtt_reply( 'vending/error/'.$bits[0], _VENDING_INVALID_KEY );
+				}
+			}
+			break;
 		case 'techspace/devices/status':
 
 			break;
@@ -107,6 +132,11 @@ function mqtt_device_reply( $device_name, $message ){
 	echo "Sending "."techspace/devices/".$device_name." message of: $message \n";
 	$mqtt->publish("techspace/devices/".$device_name,$message,0);
 }
+function mqtt_reply( $topic, $message ){
+	global $mqtt;
+	echo "Sending $topic message of: $message \n";
+	$mqtt->publish($topic,$message,0);
+}
 function mqtt_door_reply( $door_name, $message ){
 	global $mqtt;
 	echo "Sending "."techspace/doors/".$door_name." message of: $message \n";
@@ -117,6 +147,8 @@ function mqtt_door_reply( $door_name, $message ){
 $topics['techspace/checkin/rfid'] = array("qos"=>0, "function"=>"process_message");
 $topics['techspace/devices'] = array("qos"=>0, "function"=>"process_message");
 $topics['techspace/doors'] = array("qos"=>0, "function"=>"process_message");
+$topics['vending/rfid'] = array("qos"=>0, "function"=>"process_message");
+$topics['techspace/lights'] = array("qos"=>0, "function"=>"process_message");
 $topics['alive'] = array("qos"=>0, "function"=>"process_message");
 $mqtt->subscribe($topics,0);
 
