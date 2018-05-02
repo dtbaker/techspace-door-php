@@ -75,7 +75,7 @@ function process_message($topic, $message){
 			}
 			break;
 		case 'alive':
-			if(preg_match('#(.*)-(\d+\.\d+\.\d+\.\d+)#imsU', $message, $alive)){
+			if(preg_match('#(.*)-(\d+\.\d+\.\d+\.\d+)#', $message, $alive)){
 
 				$door_name = $alive[1];
 				$door_ip_address = $alive[2];
@@ -96,10 +96,11 @@ function process_message($topic, $message){
 				echo "Inavlid message\n";
 			}
 			break;
-		case 'vending/rfid':
-			$bits = explode(";",$message); // e.g. vending-1;121323123123
-			if(count($bits)==2) {
-				$member = get_member_by_rfid( $bits[1] );
+		case 'techspace/vending/rfid':
+			echo "GOT RFID CODE $message ";
+			$rfid_code = $message;
+			if($rfid_code) {
+				$member = get_member_by_rfid( $rfid_code );
 				if ( $member ) {
 					// valid membership found linked to RFID key.
 					// check if they have any orders in wordpress.
@@ -109,13 +110,13 @@ function process_message($topic, $message){
 					$member_orders = $VendingWoo->get_member_orders($member);
 
 					if($member_orders){
-						mqtt_reply( 'vending/dispatch/'.$bits[0], implode(',',$member_orders) );
+						mqtt_reply( 'techspace/vending/dispatch', implode('',$member_orders) );
 					}else{
-						mqtt_reply( 'vending/nothing/'.$bits[0], 'nothing' );
+						mqtt_reply( 'techspace/vending/dispatch', 0 );
 					}
 
 				}else{
-					mqtt_reply( 'vending/error/'.$bits[0], _VENDING_INVALID_KEY );
+					mqtt_reply( 'techspace/vending/dispatch', 1 );
 				}
 			}
 			break;
@@ -147,7 +148,7 @@ function mqtt_door_reply( $door_name, $message ){
 $topics['techspace/checkin/rfid'] = array("qos"=>0, "function"=>"process_message");
 $topics['techspace/devices'] = array("qos"=>0, "function"=>"process_message");
 $topics['techspace/doors'] = array("qos"=>0, "function"=>"process_message");
-$topics['vending/rfid'] = array("qos"=>0, "function"=>"process_message");
+$topics['techspace/vending/rfid'] = array("qos"=>0, "function"=>"process_message");
 $topics['techspace/lights'] = array("qos"=>0, "function"=>"process_message");
 $topics['alive'] = array("qos"=>0, "function"=>"process_message");
 $mqtt->subscribe($topics,0);

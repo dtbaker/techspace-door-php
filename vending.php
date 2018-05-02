@@ -61,7 +61,8 @@ class VendingWoo {
 									}
 								}
 							}
-							if($mark_order_finished){
+							echo "Order id: ".$order['id']."\n";
+							if($mark_order_finished && $order['id'] != 487242 && $order['id'] != 487246){
 								$response = $this->api('/wc-api/v3/orders/' . $order['id'], array(
 									'order' => array(
 										'status' => 'completed',
