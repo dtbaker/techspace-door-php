@@ -27,6 +27,8 @@ if(!$mqtt->connect()){
 
 //$reply = wordpress_api('1111111/ci');
 
+$device_history = []; // so we don't flood the things.
+
 function process_message($topic, $message){
 	echo "Got topic: $topic \n";
 	switch($topic){
@@ -88,16 +90,26 @@ function process_message($topic, $message){
 			$bits = explode(";",$message); // e.g. book;open
 			if(count($bits)==2){
 				$door_name = $bits[0];
-				$door_status = $bits[1];
-				mqtt_device_reply( $door_name, "Received $door_status" );
-				$reply = wordpress_api_door_status($door_name, $door_status);
+				if(empty($device_history[$door_name])){
+					$device_history[$door_name] = array();
+				}
+				$now = time();
+				if(isset($device_history[$door_name][$now])){
+					$device_history[$door_name][$now]++;
+					echo 'Spamming: ' . $device_history[$door_name][$now] . "\n";
+				}else {
+					$device_history[$door_name][$now] = 0;
+					$door_status = $bits[1];
+					mqtt_device_reply( $door_name, "Received $door_status" );
+					$reply = wordpress_api_door_status( $door_name, $door_status );
+				}
 
 			}else{
 				echo "Inavlid message\n";
 			}
 			break;
 		case 'techspace/vending/rfid':
-			echo "GOT RFID CODE $message ";
+			echo "GOT RFID CODE $message \n";
 			$rfid_code = $message;
 			if($rfid_code) {
 				$member = get_member_by_rfid( $rfid_code );
@@ -117,6 +129,25 @@ function process_message($topic, $message){
 
 				}else{
 					mqtt_reply( 'techspace/vending/dispatch', 1 );
+				}
+			}
+			break;
+		case 'techspace/vending/getproduct':
+			// web url
+			// cost
+			// quantity remaining
+			// item name.
+			echo "GOT REQUEST FOR PRODUCT: $message \n";
+			if($message){
+				require_once 'vending.php';
+				$VendingWoo = VendingWoo::get_instance();
+				$VendingWoo->init();
+				$product_details = $VendingWoo->get_product_at_location($message);
+				if($product_details){
+					mqtt_reply( 'techspace/vending/product', $message.'.1.' );
+				}else{
+					mqtt_reply( 'techspace/vending/product', $message.'.0.not found' );
+
 				}
 			}
 			break;
@@ -156,7 +187,7 @@ $mqtt->subscribe($topics,0);
 echo "Starting...\n";
 while(true) {
 	echo "Loop...\n";
-	$run_until = time() + 60; // run for 1 min at a time. updating member details in between.
+	$run_until = time() + ( 60 * 5 ); // run for 1 min at a time. updating member details in between.
 	update_member_db();
 	while ( $run_until > time() && $mqtt->proc() ) {
 		// naasty. but it works.

@@ -82,6 +82,66 @@ class VendingWoo {
 		return $purchased_items;
 	}
 
+	public function get_product_at_location($code){
+		$product = [];
+		if($code){
+			// we find the product that is stored at this location.
+			// look at a local cache of vending machine info.
+
+		}
+		return $product;
+	}
+
+	public function update_product_cache(){
+		$product_cache = _DOOR_PATH.'products.json';
+
+
+		$products = array();
+		$response = $this->api('/wc-api/v3/products');
+		$wooproducts = json_decode($response,true);
+		if($wooproducts && !empty($wooproducts['products'])) {
+			foreach ( $wooproducts['products'] as $product ) {
+				if ( ! empty( $product['attributes'] ) ) {
+					foreach ( $product['attributes'] as $attribute ) {
+						if ( ! empty( $attribute['name'] ) && strtolower( $attribute['name'] ) === 'code' && ! empty( $attribute['options'] ) ) {
+							$vending_code = trim( current( $attribute['options'] ) );
+							if ( $vending_code ) {
+								$products[] = array(
+									'code' => $vending_code,
+									'details' => $product,
+								);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		file_put_contents($product_cache, $products);
+
+		return $products;
+
+	}
+	public function get_product_listing(){
+
+		$product_cache = _DOOR_PATH.'products.json';
+		$products = @json_decode(file_get_contents($product_cache), true);
+		if(!$products){
+			$products = $this->update_product_cache();
+		}
+
+
+		$data = wordpress_api('all');
+		if($data){
+			// test to ensure it's valid json
+			$foo = json_decode($data,true);
+			if(is_array($foo) && count($foo) > 1){
+				// all good. write this json data to cache.
+				file_put_contents($product_cache, $data);
+			}
+		}
+	}
+
 	public function api($endpoint, $data = false){
 		$ch = curl_init('https://gctechspace.org' . $endpoint);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
